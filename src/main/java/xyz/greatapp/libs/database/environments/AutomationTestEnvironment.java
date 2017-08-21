@@ -9,7 +9,7 @@ public class AutomationTestEnvironment extends DatabaseEnvironment
     @Value("jdbc:savepointpgproxy://")
     private String dbDriver;
 
-    @Value("xyz.greatapp.database.automation_database_driver.SavepointPgProxyDriver")
+    @Value("xyz.greatapp.libs.database.automation_database_driver.SavepointPgProxyDriver")
     private String dbDriverClass;
 
     @Value("jdbc:savepointpgproxy://localhost:5432")
