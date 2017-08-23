@@ -12,7 +12,6 @@ import java.sql.SQLException;
 
 public class Insert {
 
-    private final Common c = new Common();
     private final DataBaseAdapter databaseAdapter;
     private final String schema;
     private final InsertQueryRQ query;
