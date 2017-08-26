@@ -9,8 +9,8 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import xyz.greatapp.libs.database.adapter.DataBaseAdapter;
 import xyz.greatapp.libs.database.util.DbBuilder;
-import xyz.greatapp.libs.service.requests.database.ColumnValue;
-import xyz.greatapp.libs.service.requests.database.SelectQueryRQ;
+import xyz.greatapp.libs.service.database.requests.fields.ColumnValue;
+import xyz.greatapp.libs.service.database.requests.SelectQueryRQ;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -31,6 +31,27 @@ public class SelectListTest {
 
     @Test
     public void shouldConvertRequestOnSelectStatement() throws Exception {
+        // given
+        SelectQueryRQ query = new SelectQueryRQ("table", new ColumnValue[]{
+                new ColumnValue("column1", "value1"),
+                new ColumnValue("column2", "value2")
+        });
+
+        select = new SelectList(databaseAdapter, "greatappxyz.", query);
+
+        // when
+        select.execute();
+
+        // then
+        ArgumentCaptor<DbBuilder> dbBuilder = ArgumentCaptor.forClass(DbBuilder.class);
+        verify(databaseAdapter).selectList(dbBuilder.capture());
+
+        String sql = dbBuilder.getValue().sql();
+        assertEquals("SELECT * FROM greatappxyz.table  WHERE column1 = ?  AND column2 = ? ;", sql);
+    }
+
+    @Test
+    public void shouldConvertRequestOnSelectStatementWithJoin() throws Exception {
         // given
         SelectQueryRQ query = new SelectQueryRQ("table", new ColumnValue[]{
                 new ColumnValue("column1", "value1"),

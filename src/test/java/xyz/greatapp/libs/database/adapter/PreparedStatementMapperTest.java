@@ -7,7 +7,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import xyz.greatapp.libs.service.requests.database.ColumnValue;
+import xyz.greatapp.libs.service.database.requests.fields.ColumnValue;
 
 import java.sql.Array;
 import java.sql.Connection;

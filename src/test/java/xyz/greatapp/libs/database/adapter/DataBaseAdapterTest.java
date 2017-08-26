@@ -10,7 +10,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import xyz.greatapp.libs.database.adapter.DataBaseAdapter;
 import xyz.greatapp.libs.database.automation_database_driver.SavepointProxyConnection;
 import xyz.greatapp.libs.database.util.DbBuilder;
-import xyz.greatapp.libs.service.requests.database.ColumnValue;
+import xyz.greatapp.libs.service.database.requests.fields.ColumnValue;
 
 import javax.sql.DataSource;
 import java.sql.Connection;

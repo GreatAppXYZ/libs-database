@@ -1,7 +1,7 @@
 package xyz.greatapp.libs.database.queries;
 
 import org.json.JSONObject;
-import xyz.greatapp.libs.service.requests.database.ColumnValue;
+import xyz.greatapp.libs.service.database.requests.fields.ColumnValue;
 
 import java.sql.ResultSet;
 

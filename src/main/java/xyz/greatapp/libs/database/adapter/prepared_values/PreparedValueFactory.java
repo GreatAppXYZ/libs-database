@@ -1,6 +1,6 @@
 package xyz.greatapp.libs.database.adapter.prepared_values;
 
-import xyz.greatapp.libs.service.requests.database.ColumnValue;
+import xyz.greatapp.libs.service.database.requests.fields.ColumnValue;
 
 import java.sql.PreparedStatement;
 

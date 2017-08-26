@@ -8,8 +8,8 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import xyz.greatapp.libs.database.adapter.DataBaseAdapter;
 import xyz.greatapp.libs.database.util.DbBuilder;
-import xyz.greatapp.libs.service.requests.database.ColumnValue;
-import xyz.greatapp.libs.service.requests.database.InsertQueryRQ;
+import xyz.greatapp.libs.service.database.requests.fields.ColumnValue;
+import xyz.greatapp.libs.service.database.requests.InsertQueryRQ;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;

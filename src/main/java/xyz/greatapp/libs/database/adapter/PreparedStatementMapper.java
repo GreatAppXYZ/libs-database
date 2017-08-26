@@ -1,7 +1,7 @@
 package xyz.greatapp.libs.database.adapter;
 
 import xyz.greatapp.libs.database.adapter.prepared_values.PreparedValueFactory;
-import xyz.greatapp.libs.service.requests.database.ColumnValue;
+import xyz.greatapp.libs.service.database.requests.fields.ColumnValue;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

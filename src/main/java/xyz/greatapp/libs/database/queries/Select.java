@@ -4,8 +4,8 @@ import org.json.JSONObject;
 import xyz.greatapp.libs.database.adapter.DataBaseAdapter;
 import xyz.greatapp.libs.database.util.DbBuilder;
 import xyz.greatapp.libs.service.ServiceResult;
-import xyz.greatapp.libs.service.requests.database.ColumnValue;
-import xyz.greatapp.libs.service.requests.database.SelectQueryRQ;
+import xyz.greatapp.libs.service.database.requests.fields.ColumnValue;
+import xyz.greatapp.libs.service.database.requests.SelectQueryRQ;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
