@@ -21,7 +21,6 @@ public class UpdateTest {
 
     @Mock
     private DataBaseAdapter databaseAdapter;
-    private Update update;
 
     @Before
     public void setUp() throws Exception {
@@ -38,7 +37,7 @@ public class UpdateTest {
                 new ColumnValue("column3", "value3"),
                 new ColumnValue("column4", "value4")});
 
-        update = new Update(databaseAdapter, "greatappxyz.", query);
+        Update update = new Update(databaseAdapter, "greatappxyz.", query);
 
         // when
         update.execute();
@@ -48,6 +47,6 @@ public class UpdateTest {
         verify(databaseAdapter).executeUpdate(dbBuilder.capture());
 
         String sql = dbBuilder.getValue().sql();
-        assertEquals("UPDATE greatappxyz.table SET column1 = ?, column2 = ?   WHERE column3 = ?  AND column4 = ? ;", sql);
+        assertEquals("UPDATE greatappxyz.table SET column1 = ?, column2 = ?  WHERE column3 = ? AND column4 = ?;", sql);
     }
 }

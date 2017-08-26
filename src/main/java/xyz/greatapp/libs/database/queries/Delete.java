@@ -28,7 +28,7 @@ public class Delete {
             @Override
             public String sql() throws SQLException {
                 return "DELETE FROM " + schema + query.getTable()
-                        + c.addWhere(query.getFilters());
+                        + c.addWhere(query.getFilters()) + ";";
             }
 
             @Override

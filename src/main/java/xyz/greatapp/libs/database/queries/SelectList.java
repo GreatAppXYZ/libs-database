@@ -28,7 +28,11 @@ public class SelectList {
         JSONArray object = databaseAdapter.selectList(new DbBuilder() {
             @Override
             public String sql() throws SQLException {
-                return "SELECT * FROM " + schema + query.getTable() + c.addWhere(query.getFilters());
+                return "SELECT * FROM " +
+                        schema +
+                        query.getTable() +
+                        c.addJoin(query.getJoins(), schema, query.getTable()) +
+                        c.addWhere(query.getFilters()) + ";";
             }
 
             @Override

@@ -44,6 +44,6 @@ public class DeleteTest {
         verify(databaseAdapter).executeUpdate(dbBuilder.capture());
 
         String sql = dbBuilder.getValue().sql();
-        assertEquals("DELETE FROM greatappxyz.table  WHERE column1 = ?  AND column2 = ? ;", sql);
+        assertEquals("DELETE FROM greatappxyz.table WHERE column1 = ? AND column2 = ?;", sql);
     }
 }
