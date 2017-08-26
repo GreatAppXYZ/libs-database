@@ -47,6 +47,9 @@ public class UpdateTest {
         verify(databaseAdapter).executeUpdate(dbBuilder.capture());
 
         String sql = dbBuilder.getValue().sql();
-        assertEquals("UPDATE greatappxyz.table SET column1 = ?, column2 = ?  WHERE column3 = ? AND column4 = ?;", sql);
+        assertEquals("UPDATE greatappxyz.table " +
+                "SET column1 = ?, column2 = ?  " +
+                "WHERE greatappxyz.table.column3 = ? " +
+                "AND greatappxyz.table.column4 = ?;", sql);
     }
 }

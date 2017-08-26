@@ -30,7 +30,7 @@ public class Update {
             public String sql() throws SQLException {
                 return "UPDATE " + schema + query.getTable()
                         + " SET " + addSets(query.getSets())
-                        + c.addWhere(query.getFilters())
+                        + c.addWhere(query.getFilters(), schema, query.getTable())
                         + ";";
             }
 

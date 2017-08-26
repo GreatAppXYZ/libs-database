@@ -47,6 +47,8 @@ public class SelectTest {
         verify(databaseAdapter).selectObject(dbBuilder.capture());
 
         String sql = dbBuilder.getValue().sql();
-        assertEquals("SELECT * FROM greatappxyz.table WHERE column1 = ? AND column2 = ?;", sql);
+        assertEquals("SELECT * FROM greatappxyz.table " +
+                "WHERE greatappxyz.table.column1 = ? " +
+                "AND greatappxyz.table.column2 = ?;", sql);
     }
 }

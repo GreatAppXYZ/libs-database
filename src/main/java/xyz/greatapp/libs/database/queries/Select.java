@@ -30,7 +30,10 @@ public class Select {
             @Override
             public String sql() throws SQLException
             {
-                return "SELECT * FROM " + schema + query.getTable() + c.addWhere(query.getFilters()) + ";";
+                return "SELECT * FROM " +
+                        schema +
+                        query.getTable() +
+                        c.addWhere(query.getFilters(), schema, query.getTable()) + ";";
             }
 
             @Override

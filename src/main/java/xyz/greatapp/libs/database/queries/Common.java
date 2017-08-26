@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 
 class Common {
 
-    String addWhere(ColumnValue[] filters) {
+    String addWhere(ColumnValue[] filters, String schema, String table) {
         if (filters == null || filters.length == 0) {
             return "";
         } else {
@@ -16,7 +16,7 @@ class Common {
             StringBuilder whereClause = new StringBuilder(" ");
             for (ColumnValue filter : filters) {
                 whereClause.append(andClause);
-                whereClause.append(filter.getColumn()).append(" = ?");
+                whereClause.append(schema).append(table).append(".").append(filter.getColumn()).append(" = ?");
                 andClause = " AND ";
             }
             return whereClause.toString();

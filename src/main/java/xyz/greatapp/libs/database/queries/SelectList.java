@@ -32,7 +32,7 @@ public class SelectList {
                         schema +
                         query.getTable() +
                         c.addJoin(query.getJoins(), schema, query.getTable()) +
-                        c.addWhere(query.getFilters()) + ";";
+                        c.addWhere(query.getFilters(), schema, query.getTable()) + ";";
             }
 
             @Override

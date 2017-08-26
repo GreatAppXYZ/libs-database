@@ -48,7 +48,8 @@ public class SelectListTest {
         verify(databaseAdapter).selectList(dbBuilder.capture());
 
         String sql = dbBuilder.getValue().sql();
-        assertEquals("SELECT * FROM greatappxyz.table WHERE column1 = ? AND column2 = ?;", sql);
+        assertEquals("SELECT * FROM greatappxyz.table WHERE greatappxyz.table.column1 = ? AND " +
+                "greatappxyz.table.column2 = ?;", sql);
     }
 
     @Test
@@ -71,5 +72,31 @@ public class SelectListTest {
         String sql = dbBuilder.getValue().sql();
         assertEquals("SELECT * FROM greatappxyz.tableA INNER JOIN tableB ON " +
                 "greatappxyz.tableA.columnA = greatappxyz.tableB.columnB;", sql);
+    }
+
+    @Test
+    public void shouldConvertRequestOnSelectStatementWithJoinAndWhere() throws Exception {
+        // given
+        ColumnValue[] filters = new ColumnValue[] {
+          new ColumnValue("columnA", "23")
+        };
+        Join[] joins = {
+                new Join("tableB", "columnA", "columnB")
+        };
+        SelectQueryRQ query = new SelectQueryRQ("tableA", filters, joins);
+
+        select = new SelectList(databaseAdapter, "greatappxyz.", query);
+
+        // when
+        select.execute();
+
+        // then
+        ArgumentCaptor<DbBuilder> dbBuilder = ArgumentCaptor.forClass(DbBuilder.class);
+        verify(databaseAdapter).selectList(dbBuilder.capture());
+
+        String sql = dbBuilder.getValue().sql();
+        assertEquals("SELECT * FROM greatappxyz.tableA INNER JOIN tableB ON " +
+                "greatappxyz.tableA.columnA = greatappxyz.tableB.columnB " +
+                "WHERE greatappxyz.tableA.columnA = ?;", sql);
     }
 }
