@@ -21,7 +21,7 @@ public class AutomationTestEnvironment extends DatabaseEnvironment
     @Value("root")
     private String dbPassword;
 
-    @Value("greatappxyz_test")
+    @Value("${db.env.automation.schema:greatappxyz_test}")
     private String schema;
 
     @Override
