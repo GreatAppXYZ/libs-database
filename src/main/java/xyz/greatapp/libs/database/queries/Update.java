@@ -18,7 +18,7 @@ public class Update {
     private final String schema;
     private final UpdateQueryRQ query;
 
-    Update(DataBaseAdapter databaseAdapter, String schema, UpdateQueryRQ query) {
+    public Update(DataBaseAdapter databaseAdapter, String schema, UpdateQueryRQ query) {
         this.databaseAdapter = databaseAdapter;
         this.schema = schema;
         this.query = query;

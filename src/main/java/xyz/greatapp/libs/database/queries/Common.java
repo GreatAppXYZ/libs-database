@@ -16,11 +16,18 @@ class Common {
             StringBuilder whereClause = new StringBuilder(" ");
             for (ColumnValue filter : filters) {
                 whereClause.append(andClause);
-                whereClause.append(schema).append(table).append(".").append(filter.getColumn()).append(" = ?");
+                whereClause.append(schema).append(getTable(filter, table)).append(".").append(filter.getColumn()).append(" = ?");
                 andClause = " AND ";
             }
             return whereClause.toString();
         }
+    }
+
+    private String getTable(ColumnValue filter, String table) {
+        if(filter.getTable() == null || filter.getTable().isEmpty()) {
+            return table;
+        }
+        return filter.getTable();
     }
 
     String addJoin(Join[] joins, String schema, String table) {

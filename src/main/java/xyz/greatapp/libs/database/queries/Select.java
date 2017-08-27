@@ -33,6 +33,7 @@ public class Select {
                 return "SELECT * FROM " +
                         schema +
                         query.getTable() +
+                        c.addJoin(query.getJoins(), schema, query.getTable()) +
                         c.addWhere(query.getFilters(), schema, query.getTable()) + ";";
             }
 

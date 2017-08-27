@@ -11,6 +11,7 @@ import xyz.greatapp.libs.database.adapter.DataBaseAdapter;
 import xyz.greatapp.libs.database.util.DbBuilder;
 import xyz.greatapp.libs.service.database.requests.fields.ColumnValue;
 import xyz.greatapp.libs.service.database.requests.SelectQueryRQ;
+import xyz.greatapp.libs.service.database.requests.fields.Join;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -50,5 +51,77 @@ public class SelectTest {
         assertEquals("SELECT * FROM greatappxyz.table " +
                 "WHERE greatappxyz.table.column1 = ? " +
                 "AND greatappxyz.table.column2 = ?;", sql);
+    }
+
+    @Test
+    public void shouldConvertRequestOnSelectStatementWithJoin() throws Exception {
+        // given
+        Join[] joins = {
+                new Join("tableB", "columnA", "columnB")
+        };
+        SelectQueryRQ query = new SelectQueryRQ("tableA", new ColumnValue[0], joins);
+
+        select = new Select(databaseAdapter, "greatappxyz.", query);
+
+        // when
+        select.execute();
+
+        // then
+        ArgumentCaptor<DbBuilder> dbBuilder = ArgumentCaptor.forClass(DbBuilder.class);
+        verify(databaseAdapter).selectObject(dbBuilder.capture());
+
+        String sql = dbBuilder.getValue().sql();
+        assertEquals("SELECT * FROM greatappxyz.tableA INNER JOIN tableB ON " +
+                "greatappxyz.tableA.columnA = greatappxyz.tableB.columnB;", sql);
+    }
+
+    @Test
+    public void shouldConvertRequestOnSelectStatementWithJoinAndWhere() throws Exception {
+        // given
+        ColumnValue[] filters = new ColumnValue[] {
+                new ColumnValue("columnA", "23")};
+        Join[] joins = {
+                new Join("tableB", "columnA", "columnB")
+        };
+        SelectQueryRQ query = new SelectQueryRQ("tableA", filters, joins);
+
+        select = new Select(databaseAdapter, "greatappxyz.", query);
+
+        // when
+        select.execute();
+
+        // then
+        ArgumentCaptor<DbBuilder> dbBuilder = ArgumentCaptor.forClass(DbBuilder.class);
+        verify(databaseAdapter).selectObject(dbBuilder.capture());
+
+        String sql = dbBuilder.getValue().sql();
+        assertEquals("SELECT * FROM greatappxyz.tableA INNER JOIN tableB ON " +
+                "greatappxyz.tableA.columnA = greatappxyz.tableB.columnB " +
+                "WHERE greatappxyz.tableA.columnA = ?;", sql);
+    }
+
+    @Test
+    public void shouldConvertRequestOnSelectStatementWithJoinAndWhereFromRightTable() throws Exception {
+        // given
+        ColumnValue[] filters = new ColumnValue[] {
+                new ColumnValue("columnB", "23", "tableB")};
+        Join[] joins = {
+                new Join("tableB", "columnA", "columnB")
+        };
+        SelectQueryRQ query = new SelectQueryRQ("tableA", filters, joins);
+
+        select = new Select(databaseAdapter, "greatappxyz.", query);
+
+        // when
+        select.execute();
+
+        // then
+        ArgumentCaptor<DbBuilder> dbBuilder = ArgumentCaptor.forClass(DbBuilder.class);
+        verify(databaseAdapter).selectObject(dbBuilder.capture());
+
+        String sql = dbBuilder.getValue().sql();
+        assertEquals("SELECT * FROM greatappxyz.tableA INNER JOIN tableB ON " +
+                "greatappxyz.tableA.columnA = greatappxyz.tableB.columnB " +
+                "WHERE greatappxyz.tableB.columnB = ?;", sql);
     }
 }

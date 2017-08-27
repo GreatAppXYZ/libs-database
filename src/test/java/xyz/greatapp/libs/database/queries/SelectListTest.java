@@ -99,4 +99,29 @@ public class SelectListTest {
                 "greatappxyz.tableA.columnA = greatappxyz.tableB.columnB " +
                 "WHERE greatappxyz.tableA.columnA = ?;", sql);
     }
+
+    @Test
+    public void shouldConvertRequestOnSelectStatementWithJoinAndWhereFromRightTable() throws Exception {
+        // given
+        ColumnValue[] filters = new ColumnValue[] {
+                new ColumnValue("columnB", "23", "tableB")};
+        Join[] joins = {
+                new Join("tableB", "columnA", "columnB")
+        };
+        SelectQueryRQ query = new SelectQueryRQ("tableA", filters, joins);
+
+        select = new SelectList(databaseAdapter, "greatappxyz.", query);
+
+        // when
+        select.execute();
+
+        // then
+        ArgumentCaptor<DbBuilder> dbBuilder = ArgumentCaptor.forClass(DbBuilder.class);
+        verify(databaseAdapter).selectList(dbBuilder.capture());
+
+        String sql = dbBuilder.getValue().sql();
+        assertEquals("SELECT * FROM greatappxyz.tableA INNER JOIN tableB ON " +
+                "greatappxyz.tableA.columnA = greatappxyz.tableB.columnB " +
+                "WHERE greatappxyz.tableB.columnB = ?;", sql);
+    }
 }
